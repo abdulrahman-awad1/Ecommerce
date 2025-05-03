@@ -12,7 +12,7 @@ class ProfileController extends Controller
 {
     public function edit(){
         $user = Auth::user();
-        return view('dashboard.profile.edit',[
+        return response()->json([
             'user'=>$user,
             'countries'=> Countries::getNames(),
             'languages'=>Languages::getNames()//composer require symfony/intl السطر دا و ال فوق عن طريق باكدج الخاصه باللغات ال متحمله
@@ -30,7 +30,9 @@ class ProfileController extends Controller
         $user = Auth::user();
      //   $user = request()->user(); نفس السطر ال فوق
         $user->profile()->fill($request->all())->save();
-        return redirect()->route('dashboard.profile.edit')->with('success','profile update');
+        return response()->json([
+            'message' => 'profile update'
+        ], 200);
 
 
     }

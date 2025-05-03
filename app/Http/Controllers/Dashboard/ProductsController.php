@@ -79,7 +79,11 @@ class ProductsController extends Controller
 
         $product = Product::findOrFail($id);
         $tags = $product->tags;
-        return view('dashboard.products.edit',compact('product','tags'));
+        return response()->json([
+            'product' => $product,
+            'tags' => $tags
+        ]);
+
     }
 
     /**
@@ -105,7 +109,9 @@ class ProductsController extends Controller
         }
         $product->tags()->sync($tag_ids);*/
 
-        return redirect()->route('products.index')->with('success','profile update');
+        return response()->json([
+            'message' => 'profile update'
+        ], 200);
 
     }
 
