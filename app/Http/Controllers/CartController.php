@@ -15,8 +15,8 @@ class CartController extends Controller
       //  $repository = new CartModelRepo(); هنا لغيت الاوبجيكت ال كل مره بستدعيه لان استخدمت السيرفر كونتينر بدل منه
       //  $items = $cart->get();
 
-        return view('',[
-            'cart'=> $cart
+        return response()->json([
+            'cart' => $cart
         ]);
     }
 
@@ -29,7 +29,9 @@ class CartController extends Controller
         $product = Product::findOrFail($request->post('product_id'));
      //   $repository = new CartModelRepo();
         $cart->add($product,$request->post('quantity'));
-        return redirect()->route('cart.index')->with('success','تم اضافة الي السله');
+        return response()->json([
+            'message' => 'تم إضافة المنتج إلى السلة'
+        ], 200);
 
     }
     public function update(Request $request ,/* $id*/ CartRepo $cart){
@@ -42,12 +44,21 @@ class CartController extends Controller
       //  $repository = new CartModelRepo();
        // $repository->update($product,$request->post('quantity'));
         $cart->update($product,$request->post('quantity'));
+        return response()->json([
+            'message' => 'تم إضافة المنتج إلى السلة'
+        ], 200);
+
+
 
 
     }
     public function destroy($id){
         $repository = new CartModelRepo();// c دي سبت الاوبجيكت عادي ومستخدمتش السيرفس بروفيدر
         $repository->delete($id);
+        return response()->json([
+            'message' => 'تم حذف المنتج'
+        ], 200);
+
 
     }
 }
